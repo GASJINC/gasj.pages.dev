@@ -1,0 +1,90 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: #bad;
+    display: flex;
+    height: 100vh;
+    background-color: gray;
+  }
+  
+  .copyrightFooter{
+    margin-top: 40px;
+    background-color: #121116;
+    padding: 20px 0px;
+    width: 100%;
+    height: 30px;
+    align-self:flex-end;
+  }
+  
+  .copyrightFooter .container{
+    margin: 0 auto;
+    width: 80%;
+    max-width: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .copyRight p, .copyrightLinks a{
+    color:#585368;
+    font-size:14px;
+    font-family: sans-serif;
+    font-weight: 100;
+    margin: 0px;
+  }
+  .copyrightLinks{
+    display: flex;
+    flex-direction: row; 
+     position: relative;
+    padding-right: 40px;
+  }
+  .copyrightLinks a{
+    text-decoration:none;
+    margin-left: 10px;
+  }
+  
+  .copyrightLinks a:hover{
+    color: #e72479;
+  }
+  
+  .cookie{
+    background-color: #fff;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right:0px;
+    top: -30px;
+  }
+  
+  .cookie i{
+    font-size:20px;
+    color:#121116;
+  }
+  
+  .cookie:hover{
+    background-color:#121116;
+  }
+  .cookie:hover i{
+    color: #fff
+  }
+  
+  @media(max-width: 500px){
+    .copyrightFooter .container{
+      flex-direction: column;
+    }
+  
+    .cookie{
+      top: -16px;
+      right: -46px;
+    }
+  }
+  
+  
+  
+  
