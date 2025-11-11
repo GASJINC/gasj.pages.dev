@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GASJ - Proprietary Ventures</title>
+    <title>GASJ - Ventures</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         /* ... (Copy all the BASE CSS from index.html here: :root, body, container, section, header, nav, logo, nav-links, h1, h2, text-accent, footer, etc.) ... */
@@ -114,7 +114,7 @@
 
     <section id="ventures" class="container" style="padding-top: 150px;">
         <h2>:: PROPRIETARY VENTURES & ASSETS</h2>
-        <p>GASJ manages a discreet portfolio of proprietary initiatives across capital, logistics, and data infrastructure. Each venture operates with autonomous governance, reporting directly to the **Centralized Strategic Unit (CSU)**.</p>
+        <p>GASJ manages a discreet portfolio of proprietary initiatives across capital, logistics, and data infrastructure.</p>
         <div id="ventures-grid">
             </div>
         <p style="text-align: center; margin-top: 40px; font-size: 0.9em; color: rgba(255, 255, 255, 0.5);">
@@ -130,14 +130,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Dynamic Venture Grid Population
             const venturesData = [
-                { title: "Protocol Sigma", desc: "Cross-border capital deployment optimization model. Status: Active." },
-                { title: "Quantum Lock", desc: "Bespoke security architecture for high-value transactional systems." },
-                { title: "Terra-Nullius", desc: "Acquisition and integration of regulatory compliant physical assets." },
-                { title: "Project Vellum", desc: "Proprietary data harvesting and strategic forecasting engine." },
-                { title: "Syndicate 900", desc: "Private equity initiative targeting emerging technological bottlenecks." },
-                { title: "D-Chain Nexus", desc: "Decentralized ledger integration for secure intra-corp communication." },
-                { title: "Sentinel Array", desc: "Global monitoring and predictive anomaly detection system." },
-                { title: "Unit 47 Reclassification", desc: "Restructuring of legacy high-risk debt instruments." }
+                { title: "Server 1", desc: "XXS true local Proxy." },
+                { title: "Server 2", desc: "Private Vpn (17 Locations)." },
+                { title: "NAS 01", desc: "Main File System (893gb)" },
+                { title: "NAS 02", desc: "File System 2 (2.5tb)." },
+                { title: "AP 1", desc: "Access Point #1." },
+                { title: "AP 2", desc: "Access Point #2." },
+                { title: "AP 3", desc: "Access Point #3." },
+                { title: "Monitor", desc: "Activity Monitor." }
             ];
 
             const venturesGrid = document.getElementById('ventures-grid');
@@ -153,7 +153,7 @@
 
                 // Add advanced click handling
                 card.addEventListener('click', () => {
-                    alert(`ACCESS DENIED. Project details for "${v.title}" require separate biometric authentication.`);
+                    alert(`ACCESS DENIED. Details for "${v.title}" require separate authentication.`);
                 });
             });
 
