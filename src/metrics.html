@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASJ - Data & Metrics Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (Copy all the BASE CSS from index.html here) ... */
+        :root { /* Shared Variables */
+            --bg-dark: #070707;
+            --text-light: #e6e6e6;
+            --accent-primary: #00e676; 
+            --accent-secondary: #00bcd4; 
+            --font-mono: 'Roboto Mono', monospace;
+            --grid-line: rgba(255, 255, 255, 0.05);
+        }
+        body { /* Shared Body */
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-mono);
+            margin: 0; padding: 0; line-height: 1.7; overflow-x: hidden; scroll-behavior: smooth;
+        }
+        .container { /* Shared Container */
+            width: 90%; max-width: 1400px; margin: auto; padding: 100px 0; position: relative;
+        }
+        section { /* Shared Section */
+            padding: 80px 0; border-bottom: 1px solid var(--grid-line);
+        }
+        header { /* Shared Header */
+            position: fixed; top: 0; width: 100%; background-color: rgba(7, 7, 7, 0.95); backdrop-filter: blur(5px); z-index: 1000; border-bottom: 1px solid var(--grid-line);
+        }
+        nav { /* Shared Nav */
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+        }
+        .logo { /* Shared Logo */
+            font-size: 1.8em; font-weight: 700; color: var(--accent-primary); letter-spacing: 0.1em;
+        }
+        .nav-links a { /* Shared Nav Links */
+            color: var(--text-light); text-decoration: none; margin-left: 30px; font-size: 0.9em; transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-links a:hover { /* Shared Nav Hover */
+            color: var(--accent-secondary); text-shadow: 0 0 8px var(--accent-secondary);
+        }
+        h2 { /* Shared H2 */
+            font-size: 2em; font-weight: 400; color: var(--accent-primary); margin-top: 0; margin-bottom: 40px;
+        }
+        .text-accent { /* Shared Accent */
+            color: var(--accent-secondary); font-weight: 700;
+        }
+        footer { /* Shared Footer */
+            text-align: center; padding: 40px 0; font-size: 0.8em; color: rgba(255, 255, 255, 0.4);
+        }
+        /* --- Metrics Section Specific CSS --- */
+        #data-visuals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .data-point {
+            background: rgba(0, 188, 212, 0.1);
+            padding: 30px;
+            border-left: 3px solid var(--accent-secondary);
+            text-align: left;
+            transition: transform 0.3s;
+        }
+        
+        .data-point:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+        }
+
+        .data-value {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            margin-bottom: 5px;
+        }
+
+        .data-label {
+            font-size: 1em;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <div class="logo">GASJ</div>
+            <div class="nav-links">
+                <a href="index.html">Interface</a>
+                <a href="ventures.html">Ventures</a>
+                <a href="metrics.html">Metrics</a>
+                <a href="protocol.html">Protocol</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="metrics" class="container" style="padding-top: 150px; text-align: center;">
+        <h2>:: DATA & METRICS INTERFACE</h2>
+        <p>A high-level synthesis of our proprietary data streams. Note: All figures are generated from internal, non-public reporting parameters and are subject to dynamic re-evaluation.</p>
+        <div id="data-visuals">
+            <div class="data-point">
+                <div class="data-value" id="metric-assets">00.00</div>
+                <div class="data-label">Proprietary Asset Value (Billion USD)</div>
+            </div>
+            <div class="data-point">
+                <div class="data-value" id="metric-jurisdictions">0</div>
+                <div class="data-label">Active Global Jurisdictions</div>
+            </div>
+            <div class="data-point">
+                <div class="data-value" id="metric-growth">0.0%</div>
+                <div class="data-label">Annualized Compound Growth Rate</div>
+            </div>
+            <div class="data-point">
+                <div class="data-value" id="metric-deployments">0</div>
+                <div class="data-label">Operational Deployments in Q4</div>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 60px;">
+            <span class="text-accent">Data Feed Status:</span> Encrypted and Synchronized. **(Figures are placeholders for visualization)**.
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> GASJ Corporate Intelligence. | **CLASSIFIED** | All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamic Metric Counting Animation
+            const animateValue = (id, start, end, duration, decimalPlaces = 0, suffix = '') => {
+                const range = end - start;
+                let current = start;
+                const increment = end > start ? 1 : -1;
+                const stepTime = Math.abs(Math.floor(duration / range));
+                const obj = document.getElementById(id);
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    obj.textContent = current.toFixed(decimalPlaces) + suffix;
+
+                    if (current >= end) {
+                        clearInterval(timer);
+                    }
+                }, stepTime);
+            }
+
+            // Trigger the animations (making the static data look like it's loading)
+            setTimeout(() => {
+                animateValue('metric-assets', 0.00, 78.41, 2000, 2, ''); // Asset Value
+                animateValue('metric-jurisdictions', 0, 19, 1500, 0, ''); // Jurisdictions
+                animateValue('metric-growth', 0.0, 14.7, 1800, 1, '%'); // Growth Rate
+                animateValue('metric-deployments', 0, 8, 1000, 0, ''); // New Metric
+            }, 500);
+
+            // Footer Year Update
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

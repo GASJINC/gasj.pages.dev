@@ -1,26 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/files/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gasj | Home</title>
+    <title>GASJ Corporate Intelligence - Terminal Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (Keep all CSS from the previous advanced version here) ... */
+        :root {
+            --bg-dark: #070707;
+            --text-light: #e6e6e6;
+            --accent-primary: #00e676; /* Bright Green */
+            --accent-secondary: #00bcd4; /* Cyan */
+            --font-mono: 'Roboto Mono', monospace;
+            --grid-line: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-mono);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: auto;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--grid-line);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(7, 7, 7, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--grid-line);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--accent-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9em;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-secondary);
+            text-shadow: 0 0 8px var(--accent-secondary);
+        }
+
+        h1 {
+            font-size: 4.5em;
+            font-weight: 700;
+            margin-bottom: 0.2em;
+            letter-spacing: -0.05em;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 400;
+            color: var(--accent-primary);
+            margin-top: 0;
+            margin-bottom: 40px;
+        }
+
+        .text-accent {
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+
+        #hero {
+            padding-top: 200px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+        }
+
+        .terminal-block {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+            padding: 40px;
+            line-height: 1.8;
+            position: relative;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .terminal-output {
+            color: var(--accent-primary);
+            white-space: pre-wrap;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+
+        .cursor {
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        /* Ventures Grid CSS (Moved to ventures.html style block) */
+        /* Metrics CSS (Moved to metrics.html style block) */
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
 </head>
 <body>
-    
-<div class="copyrightFooter">
-    <div class="container">
-      <div class="copyRight">
-        <p>2020 © Gabe Macri - Made with <i class="fas fa-heart"></p>
-      </div>
-      <div class="copyrightLinks">
-        <a href="">Privacy policy
-  </a>
-        <a href="#">Cookie policy</a>
-        <a href="#" class="cookie">
-        </a>
-      </div>
-    </div>
-  </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">GASJ</div>
+            <div class="nav-links">
+                <a href="index.html">Interface</a>
+                <a href="src/ventures.html">Ventures</a>
+                <a href="src/metrics.html">Metrics</a>
+                <a href="src/protocol.html">Protocol</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero" class="container">
+        <div class="terminal-block">
+            <pre class="terminal-output">
+<span class="terminal-prompt">G A S J &gt;</span> Initiating Secure Handshake Protocol...
+<span class="terminal-prompt">G A S J &gt;</span> Analyzing Jurisdiction Matrix: <span class="text-accent">CONFIRMED</span>
+<span class="terminal-prompt">G A S J &gt;</span> Core Mission Statement Retrieved:
+            </pre>
+            <h1>
+                <span class="text-accent">Re-shaping</span>
+                Global
+                <span class="text-accent">Architectures</span>
+            </h1>
+            <p>
+                GASJ is a closed-loop strategic entity focused on proprietary resource synthesis, geopolitical portfolio optimization, and discreet value creation across highly regulated sectors. Our operational doctrine is built upon <span class="text-accent">zero-exposure methodology</span>.
+            </p>
+            <pre class="terminal-output">
+<span class="terminal-prompt">G A S J &gt;</span> Ready for Command Input<span class="cursor">_</span>
+            </pre>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> GASJ Corporate Intelligence. | **CLASSIFIED** | All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Footer Year Update
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
 </html>

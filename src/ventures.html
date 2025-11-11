@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASJ - Proprietary Ventures</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (Copy all the BASE CSS from index.html here: :root, body, container, section, header, nav, logo, nav-links, h1, h2, text-accent, footer, etc.) ... */
+        :root { /* Shared Variables */
+            --bg-dark: #070707;
+            --text-light: #e6e6e6;
+            --accent-primary: #00e676; 
+            --accent-secondary: #00bcd4; 
+            --font-mono: 'Roboto Mono', monospace;
+            --grid-line: rgba(255, 255, 255, 0.05);
+        }
+        body { /* Shared Body */
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-mono);
+            margin: 0; padding: 0; line-height: 1.7; overflow-x: hidden; scroll-behavior: smooth;
+        }
+        .container { /* Shared Container */
+            width: 90%; max-width: 1400px; margin: auto; padding: 100px 0; position: relative;
+        }
+        section { /* Shared Section */
+            padding: 80px 0; border-bottom: 1px solid var(--grid-line);
+        }
+        header { /* Shared Header */
+            position: fixed; top: 0; width: 100%; background-color: rgba(7, 7, 7, 0.95); backdrop-filter: blur(5px); z-index: 1000; border-bottom: 1px solid var(--grid-line);
+        }
+        nav { /* Shared Nav */
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+        }
+        .logo { /* Shared Logo */
+            font-size: 1.8em; font-weight: 700; color: var(--accent-primary); letter-spacing: 0.1em;
+        }
+        .nav-links a { /* Shared Nav Links */
+            color: var(--text-light); text-decoration: none; margin-left: 30px; font-size: 0.9em; transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-links a:hover { /* Shared Nav Hover */
+            color: var(--accent-secondary); text-shadow: 0 0 8px var(--accent-secondary);
+        }
+        h2 { /* Shared H2 */
+            font-size: 2em; font-weight: 400; color: var(--accent-primary); margin-top: 0; margin-bottom: 40px;
+        }
+        .text-accent { /* Shared Accent */
+            color: var(--accent-secondary); font-weight: 700;
+        }
+        footer { /* Shared Footer */
+            text-align: center; padding: 40px 0; font-size: 0.8em; color: rgba(255, 255, 255, 0.4);
+        }
+        /* --- Ventures Section Specific CSS --- */
+        #ventures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .venture-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--grid-line);
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer; /* Added for interactivity hint */
+        }
+
+        .venture-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent-primary);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+            transform-origin: top;
+        }
+
+        .venture-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .venture-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .venture-card h3 {
+            color: var(--accent-primary);
+            font-size: 1.4em;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <div class="logo">GASJ</div>
+            <div class="nav-links">
+                <a href="index.html">Interface</a>
+                <a href="ventures.html">Ventures</a>
+                <a href="metrics.html">Metrics</a>
+                <a href="protocol.html">Protocol</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="ventures" class="container" style="padding-top: 150px;">
+        <h2>:: PROPRIETARY VENTURES & ASSETS</h2>
+        <p>GASJ manages a discreet portfolio of proprietary initiatives across capital, logistics, and data infrastructure. Each venture operates with autonomous governance, reporting directly to the **Centralized Strategic Unit (CSU)**.</p>
+        <div id="ventures-grid">
+            </div>
+        <p style="text-align: center; margin-top: 40px; font-size: 0.9em; color: rgba(255, 255, 255, 0.5);">
+            Note: All displayed assets are for high-level classification only. Details are encrypted. Access is restricted.
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> GASJ Corporate Intelligence. | **CLASSIFIED** | All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamic Venture Grid Population
+            const venturesData = [
+                { title: "Protocol Sigma", desc: "Cross-border capital deployment optimization model. Status: Active." },
+                { title: "Quantum Lock", desc: "Bespoke security architecture for high-value transactional systems." },
+                { title: "Terra-Nullius", desc: "Acquisition and integration of regulatory compliant physical assets." },
+                { title: "Project Vellum", desc: "Proprietary data harvesting and strategic forecasting engine." },
+                { title: "Syndicate 900", desc: "Private equity initiative targeting emerging technological bottlenecks." },
+                { title: "D-Chain Nexus", desc: "Decentralized ledger integration for secure intra-corp communication." },
+                { title: "Sentinel Array", desc: "Global monitoring and predictive anomaly detection system." },
+                { title: "Unit 47 Reclassification", desc: "Restructuring of legacy high-risk debt instruments." }
+            ];
+
+            const venturesGrid = document.getElementById('ventures-grid');
+            venturesData.forEach((v, index) => {
+                const card = document.createElement('div');
+                card.className = 'venture-card';
+                card.setAttribute('data-index', index);
+                card.innerHTML = `
+                    <h3>${v.title}</h3>
+                    <p style="font-size:0.9em; opacity: 0.8;">${v.desc}</p>
+                `;
+                venturesGrid.appendChild(card);
+
+                // Add advanced click handling
+                card.addEventListener('click', () => {
+                    alert(`ACCESS DENIED. Project details for "${v.title}" require separate biometric authentication.`);
+                });
+            });
+
+            // Footer Year Update
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
