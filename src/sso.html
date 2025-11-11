@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Redirect Gate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for background and font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 90vw;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-container" class="container bg-white p-8 shadow-2xl rounded-xl transition duration-500 ease-in-out transform scale-100">
+        <h1 class="text-3xl font-extrabold mb-6 text-gray-900 text-center">Access Gate (Redirect)</h1>
+        
+        <form id="password-form" class="space-y-6">
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Enter Password to Redirect</label>
+                <input 
+                    type="password" 
+                    id="password-input" 
+                    placeholder="Enter key"
+                    required 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
+                >
+            </div>
+            
+            <button 
+                type="submit" 
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-lg text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99]"
+            >
+                Verify & Redirect
+            </button>
+        </form>
+
+        <div id="message-box" class="mt-4 text-center text-red-600 font-semibold hidden">
+            </div>
+
+        <div class="mt-8 text-sm text-gray-500 text-center">
+            <p>On success, this page will redirect to <span class="font-mono bg-gray-100 px-1 rounded text-gray-700"> ad***side</span></p>
+            <p class="text-xs mt-2">The password hash check is done on the client-side.</p>
+        </div>
+    </div>
+
+    <script>
+        // Target password: "hidden"
+        // SHA-256 Hash of "hidden"
+        const CORRECT_HASH = '63d6b0460c449c2560b41113b246a47be4088924151b74737d9953257f897d22';
+        const REDIRECT_URL = 'http://example.com';
+
+        const form = document.getElementById('password-form');
+        const passwordInput = document.getElementById('password-input');
+        const messageBox = document.getElementById('message-box');
+
+        /**
+         * Converts an ArrayBuffer to a hexadecimal string.
+         * @param {ArrayBuffer} buffer 
+         * @returns {string} The hex representation of the buffer.
+         */
+        function bufferToHex(buffer) {
+            return Array.prototype.map.call(new Uint8Array(buffer), x => (('00' + x.toString(16)).slice(-2))).join('');
+        }
+
+        /**
+         * Hashes the input string using SHA-256 (requires async/await).
+         * @param {string} message 
+         * @returns {Promise<string>} The SHA-256 hash in hex format.
+         */
+        async function sha256(message) {
+            try {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                return bufferToHex(hashBuffer);
+            } catch (error) {
+                console.error("Hashing failed:", error);
+                return null;
+            }
+        }
+
+        /**
+         * Handles the form submission, verification, and redirection.
+         */
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const inputPassword = passwordInput.value;
+            messageBox.classList.add('hidden');
+            passwordInput.classList.remove('border-red-500');
+
+            // 1. Hash the user's input password
+            const inputHash = await sha256(inputPassword);
+
+            if (inputHash === null) {
+                showMessage("An error occurred during hashing. Check console.");
+                return;
+            }
+
+            // 2. Compare the calculated hash to the stored correct hash
+            if (inputHash === CORRECT_HASH) {
+                // Success: Redirect the user
+                console.log("Password verified. Redirecting to " + REDIRECT_URL);
+                showMessage("Success! Redirecting...");
+                passwordInput.classList.add('border-green-500');
+                
+                // Use a short timeout for the message to display before redirecting
+                setTimeout(() => {
+                    window.location.href = REDIRECT_URL;
+                }, 500); // Redirect after half a second
+                
+            } else {
+                // Failure: Show error
+                showMessage("Invalid Password. Try again.");
+                passwordInput.classList.add('border-red-500');
+                passwordInput.value = ''; // Clear input on failure
+            }
+        });
+
+        /**
+         * Displays a temporary message in the message box.
+         * @param {string} message 
+         */
+        function showMessage(message) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden');
+            messageBox.classList.remove('text-red-600');
+            messageBox.classList.add(message.startsWith("Success") ? 'text-green-600' : 'text-red-600');
+        }
+        
+        // Initialize with focus on the input field
+        window.onload = () => {
+            passwordInput.focus();
+        };
+
+    </script>
+</body>
+</html>
