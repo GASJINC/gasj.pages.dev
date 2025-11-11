@@ -48,6 +48,9 @@
         .text-accent { /* Shared Accent */
             color: var(--accent-secondary); font-weight: 700;
         }
+        footer { /* Shared Footer */
+            text-align: center; padding: 40px 0; font-size: 0.8em; color: rgba(255, 255, 255, 0.4);
+        }
         /* --- Terminal and Protocol Specific CSS --- */
         .terminal-block {
             max-width: 800px;
@@ -71,8 +74,64 @@
             text-shadow: 0 0 10px #ff0000;
         }
 
-        footer { /* Shared Footer */
-            text-align: center; padding: 40px 0; font-size: 0.8em; color: rgba(255, 255, 255, 0.4);
+        /* --- Admin Access Specific Styles --- */
+        .admin-button {
+            background-color: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            padding: 10px 25px;
+            margin-top: 50px;
+            font-family: var(--font-mono);
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+
+        .admin-button:hover {
+            background-color: var(--accent-primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--accent-primary);
+        }
+
+        #admin-panel {
+            margin-top: 30px;
+            border-top: 1px dashed var(--grid-line);
+            padding-top: 20px;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+
+        #password-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-secondary);
+            color: var(--accent-secondary);
+            padding: 8px;
+            font-family: var(--font-mono);
+            width: 70%;
+            margin-right: 10px;
+            box-shadow: inset 0 0 5px rgba(0, 188, 212, 0.5);
+        }
+
+        #password-submit {
+            background-color: var(--accent-secondary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            transition: background-color 0.3s;
+        }
+
+        #password-submit:hover {
+            background-color: #ffffff;
+        }
+
+        #status-message {
+            margin-top: 15px;
+            color: var(--accent-primary);
+            min-height: 20px;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -102,6 +161,17 @@
             <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.5;">
                 Secure Hash Required. Unauthorized Access Attempted: <span id="access-attempts">0</span>
             </p>
+
+            <button class="admin-button" id="admin-access-btn">Admin Access</button>
+
+            <div id="admin-panel">
+                <p class="terminal-prompt" style="font-size: 1em;">AUTHORIZATION REQUIRED:</p>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <input type="password" id="password-input" placeholder="Enter Secure Credentials" autocomplete="off">
+                    <button id="password-submit">Submit</button>
+                </div>
+                <div id="status-message"></div>
+            </div>
         </div>
     </section>
 
@@ -114,18 +184,29 @@
             let attempts = 0;
             const protocolLink = document.getElementById('protocol-link');
             const attemptsCounter = document.getElementById('access-attempts');
+            const adminAccessBtn = document.getElementById('admin-access-btn');
+            const adminPanel = document.getElementById('admin-panel');
+            const passwordInput = document.getElementById('password-input');
+            const passwordSubmit = document.getElementById('password-submit');
+            const statusMessage = document.getElementById('status-message');
 
+            const CORRECT_PASSWORD = "Gasj2025!";
+            
+            // 1. Regular Protocol Link Handler
             protocolLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 attempts++;
                 attemptsCounter.textContent = attempts;
                 
                 protocolLink.textContent = "ATTEMPTING CONNECTION...";
-                protocolLink.style.textShadow = '0 0 15px #00e676'; // Temp Green glow
+                protocolLink.style.textShadow = '0 0 15px var(--accent-primary)'; // Temp Green glow
 
                 setTimeout(() => {
                     protocolLink.textContent = "CONNECTION FAILED: SEC_ERR_049";
                     protocolLink.classList.add('error-glow'); // Add red glow for error
+                    
+                    // Using standard browser alert for non-critical, recurring messages
+                    // as per complexity/simplicity balance in a multi-file context.
                     alert(`ACCESS DENIED. Attempt ${attempts} logged. A firewall has been detected. Clearances must be pre-validated.`);
                     
                     // Reset after a short period
@@ -135,6 +216,47 @@
                         protocolLink.style.textShadow = 'none';
                     }, 2500);
                 }, 1500);
+            });
+
+            // 2. Admin Access Button Handler
+            adminAccessBtn.addEventListener('click', () => {
+                adminPanel.style.display = 'block';
+                adminAccessBtn.style.display = 'none'; // Hide button after click
+                passwordInput.focus();
+            });
+
+            // 3. Password Submission Handler
+            const checkPassword = () => {
+                statusMessage.textContent = '...AUTHENTICATING...';
+                statusMessage.style.color = 'var(--accent-secondary)';
+
+                // Introduce a slight delay to simulate a network check
+                setTimeout(() => {
+                    if (passwordInput.value === CORRECT_PASSWORD) {
+                        statusMessage.textContent = 'ACCESS GRANTED. Redirecting...';
+                        statusMessage.style.color = 'var(--accent-primary)';
+                        
+                        // Perform the redirect as requested
+                        setTimeout(() => {
+                            window.location.href = "https://example.com";
+                        }, 1000); // 1 second delay before redirect
+                        
+                    } else {
+                        statusMessage.textContent = 'ERROR: CODE 401: INVALID CREDENTIALS. Retry.';
+                        statusMessage.style.color = '#ff0000';
+                        passwordInput.value = ''; // Clear the input
+                        passwordInput.focus();
+                    }
+                }, 800);
+            };
+
+            passwordSubmit.addEventListener('click', checkPassword);
+            
+            // Allow submission via Enter key
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
             });
 
             // Footer Year Update
